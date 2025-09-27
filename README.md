@@ -7,6 +7,78 @@
 This application aims to provide a template for building generative UI applications with LangChain Python.
 It comes pre-built with a few UI features which you can use to play about with gen ui. The UI components are built using [Shadcn](https://ui.shadcn.com/).
 
+## 技术栈
+
+### 前端技术栈
+- **框架**: Next.js 14.2.3 (React 18)
+- **语言**: TypeScript
+- **样式**: Tailwind CSS + Shadcn/ui
+- **状态管理**: Jotai
+- **图表库**: Tremor React + MUI X Charts
+- **AI集成**: LangChain.js + Vercel AI SDK
+- **UI组件**: Radix UI + Lucide React
+- **构建工具**: Yarn
+
+### 后端技术栈
+- **框架**: FastAPI + Uvicorn
+- **语言**: Python 3.9-3.11
+- **AI框架**: LangChain + LangGraph
+- **数据库**: MongoDB (Motor异步驱动)
+- **API服务**: LangServe
+- **依赖管理**: UV (替代Poetry)
+- **类型检查**: MyPy + Ruff
+
+### 部署与运维
+- **容器化**: Docker + Docker Compose
+- **环境管理**: 多环境配置 (开发/生产)
+- **镜像加速**: 华为云镜像仓库
+- **热重载**: 开发环境支持
+
+## 项目架构
+
+```
+gen-ui-python/
+├── frontend/                 # Next.js 前端应用
+│   ├── app/                 # App Router 页面
+│   ├── components/          # UI 组件库
+│   ├── ai/                  # AI 相关工具和钩子
+│   ├── lib/                 # 工具函数
+│   └── utils/               # 实用工具
+├── backend/                 # FastAPI 后端服务
+│   └── gen_ui_backend/     # 后端核心模块
+│       ├── server.py       # FastAPI 服务器
+│       ├── chain.py        # LangChain 链式处理
+│       ├── ai_config.py    # AI 配置管理
+│       ├── tools/          # 工具模块 (天气、GitHub等)
+│       └── charts/         # 图表相关功能
+├── docker-compose.yml       # 开发环境配置
+├── docker-compose.prod.yml  # 生产环境配置
+└── env.template            # 环境变量模板
+```
+
+### 核心功能模块
+
+1. **AI 对话系统**
+   - 基于 LangChain 的对话链
+   - 支持多轮对话和上下文管理
+   - 集成 OpenAI GPT 模型
+
+2. **工具集成**
+   - 天气查询工具
+   - GitHub 仓库操作
+   - 发票生成工具
+   - 可扩展的工具架构
+
+3. **图表可视化**
+   - 动态图表生成
+   - 数据可视化组件
+   - 交互式图表展示
+
+4. **响应式UI**
+   - 基于 Shadcn/ui 的现代设计
+   - 移动端适配
+   - 暗色/亮色主题支持
+
 ## Getting Started
 
 ### 使用 Docker Compose (推荐)
