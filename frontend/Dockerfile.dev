@@ -1,0 +1,40 @@
+# 开发环境Dockerfile - 支持热加载
+FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:18-alpine
+
+# 设置工作目录
+WORKDIR /app
+
+# 配置 npm 和 yarn 使用国内镜像源
+RUN npm config set registry https://registry.npmmirror.com && \
+    yarn config set registry https://registry.npmmirror.com && \
+    yarn config set network-timeout 300000
+
+# 复制 package 文件
+COPY package.json yarn.lock ./
+
+# 安装依赖
+RUN yarn install --frozen-lockfile
+
+# 复制配置文件（在开发模式下源代码会被 volume 挂载覆盖）
+COPY next.config.mjs ./
+COPY tailwind.config.ts ./
+COPY tsconfig.json ./
+COPY postcss.config.mjs ./
+COPY components.json ./
+
+# 复制源代码目录（在开发模式下会被 volume 挂载覆盖）
+COPY app ./app
+COPY components ./components
+COPY lib ./lib
+COPY utils ./utils
+COPY ai ./ai
+COPY public ./public
+
+# 暴露端口
+EXPOSE 3000
+
+# 设置环境变量
+ENV NODE_ENV=development
+
+# 开发模式启动命令 - 使用Next.js开发服务器，启用热重载
+CMD ["yarn", "dev", "--hostname", "0.0.0.0"]

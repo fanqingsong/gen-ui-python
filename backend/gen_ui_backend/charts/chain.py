@@ -3,9 +3,10 @@ from typing import List, Literal, Optional, TypedDict
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.pydantic_v1 import BaseModel, Field
-from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph
 from langgraph.graph.graph import CompiledGraph
+
+from gen_ui_backend.ai_config import create_chat_openai
 
 from gen_ui_backend.charts.schema import (
     ChartType,
@@ -60,7 +61,7 @@ to be converted into a structured query.""",
         set(order["productName"].lower() for order in state["orders"])
     )
     schema = filter_schema(unique_product_names)
-    model = ChatOpenAI(model="gpt-4-turbo", temperature=0).with_structured_output(
+    model = create_chat_openai(model="gpt-4-turbo", temperature=0).with_structured_output(
         schema
     )
     chain = prompt | model
@@ -103,7 +104,7 @@ Generated filters: {selected_filters}""",
             ..., description="The type of chart to display the data."
         )
 
-    model = ChatOpenAI(model="gpt-4-turbo", temperature=0).with_structured_output(
+    model = create_chat_openai(model="gpt-4-turbo", temperature=0).with_structured_output(
         ChartTypeSchema
     )
     chain = prompt | model
@@ -155,7 +156,7 @@ Generated filters: {selected_filters}""",
             description=f"The key of the format to display the data in. Must be one of {', '.join([item['key'] for item in state['display_formats'] if item['chartType'] == state['chart_type']])}",
         )
 
-    model = ChatOpenAI(model="gpt-4-turbo", temperature=0).with_structured_output(
+    model = create_chat_openai(model="gpt-4-turbo", temperature=0).with_structured_output(
         DataDisplayFormatSchema
     )
     chain = prompt | model

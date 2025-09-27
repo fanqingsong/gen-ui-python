@@ -1,0 +1,60 @@
+Metadata-Version: 2.4
+Name: gen-ui-backend
+Version: 0.0.0
+Author: Gen UI Team
+License: MIT
+Requires-Python: <3.12,>=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: langchain-core>=0.2.4
+Requires-Dist: typer<0.10.0,>=0.9.0
+Requires-Dist: langchain>=0.2.2
+Requires-Dist: langchain-openai>=0.1.8
+Requires-Dist: openai>=1.0.0
+Requires-Dist: pymongo>=4.6.3
+Requires-Dist: python-dotenv>=1.0.1
+Requires-Dist: motor>=3.4.0
+Requires-Dist: langgraph>=0.0.62
+Requires-Dist: langserve<0.1.0,>=0.0.40
+Requires-Dist: fastapi<1,>=0.110.2
+Requires-Dist: uvicorn<0.24.0,>=0.23.2
+Requires-Dist: pydantic<2,>=1.10.13
+Requires-Dist: rich>=13.7.1
+Requires-Dist: langchain-community>=0.2.3
+Requires-Dist: langgraph-cli>=0.1.46
+Requires-Dist: langchain-anthropic>=0.1.16
+Requires-Dist: httpx<0.28.0,>=0.25.0
+Dynamic: license-file
+
+# Gen UI Backend
+
+Gen UI Python 项目的后端服务，提供 AI 驱动的用户界面生成功能。
+
+## 功能特性
+
+- Azure OpenAI 支持
+- 热加载开发环境
+- FastAPI 框架
+- LangChain 集成
+- Docker 容器化
+
+## 开发
+
+```bash
+# 启动开发环境
+./start_dev.sh
+
+# 查看日志
+docker compose logs -f backend
+```
+
+## 生产部署
+
+```bash
+# 启动生产环境
+./start_prod.sh
+```
+
+## API 文档
+
+启动服务后访问：http://localhost:8000/docs

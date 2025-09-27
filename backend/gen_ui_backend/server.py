@@ -11,7 +11,8 @@ from gen_ui_backend.types import ChatInputType
 load_dotenv()
 
 
-def start() -> None:
+def create_app() -> FastAPI:
+    """创建FastAPI应用实例"""
     app = FastAPI(
         title="Gen UI Backend",
         version="1.0",
@@ -37,5 +38,21 @@ def start() -> None:
     runnable = graph.with_types(input_type=ChatInputType, output_type=dict)
 
     add_routes(app, runnable, path="/chat", playground_type="chat")
+    
+    # 添加健康检查端点
+    @app.get("/health")
+    async def health_check():
+        return {"status": "healthy", "service": "gen-ui-backend"}
+    
+    return app
+
+
+def start() -> None:
+    """启动服务器（用于生产环境）"""
+    app = create_app()
     print("Starting server...")
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+# 创建应用实例（用于开发环境）
+app = create_app()
